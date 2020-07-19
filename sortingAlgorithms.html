@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Project - Sorting Algorithms Visualizer</title>
+    <link rel="stylesheet" href="./public/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="./public/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+    <style>
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
+        <a class="navbar-brand logo" href="./index.html">Matej Kalc - Sorting Algorithms Visualizer</a>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><button
+                        class="btn btn-secondary nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                        style="color: #ffffff;" onclick="generateRandomTable()">New Random Table</button>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><button
+                        class="btn btn-danger nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                        style="color: #ffffff;" onclick="sort()">Sort</button>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1" role="presentation">
+                    <select onchange="selectOptionChanged()" class="form-control nav-link px-0 px-lg-3 rounded"
+                        id="algorithmSelect"
+                        style="margin: auto; width:100%; height:100%; background-color: rgba(0,0,0,0); color: #ffffff;border-color: rgba(255,255,255,0);">
+                        <option value="1" selected="" style="color:black">Insertion Sort</option>
+                        <option value="2" style="color:black">Select Sort</option>
+                        <option value="3" style="color:black">Bubble Sort</option>
+                        <option value="4" style="color:black">Heap Sort</option>
+                        <option value="5" style="color:black">Quick Sort</option>
+                        <option value="6" style="color:black">Merge Sort</option>
+                        <option value="7" style="color:black">Count Sort</option>
+                        <option value="8" style="color:black">Shell Sort</option>
+                        <option value="9" style="color:black">Comb Sort</option>
+                    </select>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1" role="presentation">
+                    <select onchange="selectVelocityOptionChanged()" class="form-control nav-link px-0 px-lg-3 rounded"
+                        id="velocitySelect"
+                        style="margin: auto; width:100%; height:100%; background-color: rgba(0,0,0,0); color: #ffffff;border-color: rgba(255,255,255,0);">
+                        <option value="1" selected="" style="color:black">Slow</option>
+                        <option value="2" style="color:black">Normal</option>
+                        <option value="3" style="color:black">Fast</option>
+                    </select>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1" role="presentation">
+                    <select onchange="selectSizeTableOptionChanged()" class="form-control nav-link px-0 px-lg-3 rounded"
+                        id="sizeArraySelect"
+                        style="margin: auto; width:100%; height:100%; background-color: rgba(0,0,0,0); color: #ffffff;border-color: rgba(255,255,255,0);">
+                        <option value="1" selected="" style="color:black">Small Array</option>
+                        <option value="2" style="color:black">Medium Array</option>
+                        <option value="3" style="color:black">Big Array</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main class="page">
+        <section class="portfolio-block">
+            <div class="heading">
+                <div id="infoAlgorithm">
+                    <h4><b>Insertion Sort</b> has quadratic time complexity.</h4>
+                </div>
+                <form>
+                    <canvas width="300" height="300" id="myCanvas"></canvas>
+                </form>
+        </section>
+    </main>
+    <script src="./public/javascripts/jquery.min.js"></script>
+    <script src="./public/javascripts/constants.js"></script>
+    <script src="./public/javascripts/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+    <script src="./public/javascripts/utility.js"></script>
+    <script src="./public/algorithms/bubbleSort.js"></script>
+    <script src="./public/algorithms/combSort.js"></script>
+    <script src="./public/algorithms/countSort.js"></script>
+    <script src="./public/algorithms/heapSort.js"></script>
+    <script src="./public/algorithms/insertionSort.js"></script>
+    <script src="./public/algorithms/mergeSort.js"></script>
+    <script src="./public/algorithms/quickSort.js"></script>
+    <script src="./public/algorithms/selectionSort.js"></script>
+    <script src="./public/algorithms/shellSort.js"></script>
+</body>
+
+<script>
+    const myCanvas = document.getElementById("myCanvas");
+    const ctx = myCanvas.getContext("2d");
+    var table;
+    var numberOfElementsInTable = littleSizeArray;
+    var velocity = slowVelocitySorting;
+
+    $(document).ready(function () {
+        generateRandomTable();
+    });
+
+    function generateRandomTable() {
+        clearAllTimeouts();
+
+        table = [];
+        for (var i = 0; i < numberOfElementsInTable; i++) {
+            var val = Math.random() * numberOfElementsInTable + 1;
+            table[i] = parseInt(val, 10);
+        }
+        drawTable(table);
+    }
+
+    function selectOptionChanged() {
+        document.getElementById("infoAlgorithm").innerHTML = '';
+        var element = '';
+
+        var selectedAlgorithm = document.getElementById("algorithmSelect").selectedIndex;
+        switch (selectedAlgorithm) {
+            case 0:
+                element = '<h4><b>Insertion Sort</b> has quadratic time complexity.</h4>';
+                break;
+            case 1:
+                element = '<h4><b>Selection Sort</b> has quadratic time complexity.</h4>';
+                break;
+            case 2: element = '<h4><b>Bubble Sort</b> has quadratic time complexity.</h4>'; break;
+            case 3: element = '<h4><b>Heap Sort</b> has time complexity O(n * log n).</h4>'; break;
+            case 4: element = '<h4><b>Quick Sort</b> has time complexity O(n * log n).</h4>'; break;
+            case 5: element = '<h4><b>Merge Sort</b> has time complexity O(n * log n).</h4>'; break;
+            case 6: element = '<h4><b>Count Sort</b> has linear time complexity.</h4>'; break;
+            case 7: element = '<h4><b>Shell Sort</b> has quadratic time complexity.</h4>'; break;
+            case 8: element = '<h4><b>Comb Sort</b> has time complexity O(n * log n).</h4>'; break;
+            default: break;
+        }
+
+        document.getElementById("infoAlgorithm").insertAdjacentHTML('beforeend', element);
+    }
+
+    function selectVelocityOptionChanged() {
+
+        var selectedVelocity = document.getElementById("velocitySelect").selectedIndex;
+        switch (selectedVelocity) {
+            
+            case 0:
+                size = slowVelocitySorting;
+                break;
+            case 1:
+                velocity = mediumVelocitySorting;
+                break;
+            case 2:
+                velocity = fastVelocitySorting;
+                break;
+            default: break;
+        }
+
+    }
+
+    function selectSizeTableOptionChanged() {
+
+        var selectedSize = document.getElementById("sizeArraySelect").selectedIndex;
+        switch (selectedSize) {
+            case 0:
+                numberOfElementsInTable = littleSizeArray;
+                break;
+            case 1:
+                numberOfElementsInTable = middleSizeArray;
+                break;
+            case 2:
+                numberOfElementsInTable = bigSizeArray;
+                break;
+            default: break;
+        }
+        generateRandomTable();
+    }
+
+    function sort() {
+        var selectedAlgorithm = document.getElementById("algorithmSelect").selectedIndex;
+        clearAllTimeouts();
+
+        var states = [];
+
+        switch (selectedAlgorithm) {
+            case 0:
+                states = insertionSort();
+                break;
+            case 1:
+                selectionSort();
+                break;
+            case 2: states = bubbleSort(); break;
+            case 3: states = heapSort(); break;
+            case 4: states = quickSort(); break;
+            case 5: states = mergeSort(); break;
+            case 6: states = countSort(); break;
+            case 7: states = shellsort(); break;
+            case 8: states = combsort(); break;
+            default: break;
+        }
+
+        drawTables(states);
+    }
+
+    function drawTable(table) {
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        var widthOfElem = myCanvas.width / table.length;
+        for (var i = 0; i < table.length; i++) {
+            var val = table[i];
+            if (val < numberOfElementsInTable / 7)
+                ctx.fillStyle = "rgb(238, 130, 238)";
+            else if (val < 2 * numberOfElementsInTable / 7)
+                ctx.fillStyle = "rgb(75,0,130)";
+            else if (val < 3 * numberOfElementsInTable / 7)
+                ctx.fillStyle = "rgb(0,0,255)";
+            else if (val < 4 * numberOfElementsInTable / 7)
+                ctx.fillStyle = "rgb(0,128,0)";
+            else if (val < 5 * numberOfElementsInTable / 7)
+                ctx.fillStyle = "rgb(255,255,0)";
+            else if (val < 6 * numberOfElementsInTable / 7)
+                ctx.fillStyle = "rgb(255,165,0)";
+            else
+                ctx.fillStyle = "rgb(255,0,0)";
+            ctx.fillRect(i * widthOfElem, 0, widthOfElem, val / numberOfElementsInTable * myCanvas.height);
+        }
+    }
+    function drawTables(tables) {
+        var numberOfStates = tables.length;
+        var speed = velocity / numberOfStates;
+        var indexTable = 0;
+        for (var count = 0; count < tables.length; count++) {
+
+            setTimeout(() => {
+                if (tables != null && indexTable < tables.length) {
+                    drawTable(tables[indexTable])
+                    indexTable++;
+                    if (indexTable >= tables.length) {
+                        clearAllTimeouts();
+                        tables = null;
+                    }
+                }
+            }, speed * count);
+        }
+    }
+
+</script>
+
+</html>

@@ -1,5 +1,8 @@
 function insertionSort() {
-    tables = [];
+    var tables = [];
+
+    var numberOfComparisions = 0;
+    var numberOfSwaps = 0;
 
     /*
         0: 2 1 9
@@ -9,7 +12,9 @@ function insertionSort() {
     // zacetek
     for (var i = 0; i < table.length; i++) {
         var j = i - 1;
+        numberOfComparisions++;
         while (j >= 0 && table[j] > table[j + 1]) {
+            numberOfSwaps++;
             swap(j, j + 1);
             tables.push(table.map((x) => x)); // shranim stanje
             j--;
@@ -17,7 +22,7 @@ function insertionSort() {
     }
     // konec
 
-    return tables;
+    return {numberOfComparisions, numberOfSwaps, tables};
 
 }
 

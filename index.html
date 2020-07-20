@@ -256,7 +256,9 @@
             ctx.fillRect(i * widthOfElem, 0, widthOfElem, val / numberOfElementsInTable * myCanvas.height);
         }
     }
-    function drawTables(tables) {
+    function drawTables(states) {
+        console.log(states);
+        var tables = states.tables;
         var numberOfStates = tables.length;
         var speed = velocity / numberOfStates;
         var indexTable = 0;
@@ -268,11 +270,17 @@
                     indexTable++;
                     if (indexTable >= tables.length) {
                         clearAllTimeouts();
+                        showComparisionAndSwaps(states.numberOfComparisions, states.numberOfSwaps);
                         tables = null;
                     }
                 }
             }, speed * count);
         }
+    }
+    function showComparisionAndSwaps(comp, swaps) {
+        setTimeout(() => {
+            alert('Sort completed with ' + comp + ' comparisions and ' + swaps + ' swaps.');
+        }, 300);
     }
 
 </script>

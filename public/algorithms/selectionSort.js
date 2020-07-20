@@ -1,17 +1,21 @@
 function selectionSort() {
-    tables = [];
+    var tables = [];
+    var numberOfComparisions = 0;
+    var numberOfSwaps = 0;
 
     for (var i = 0; i < table.length; i++) {
         var indexMin = i;
         for (var j = i; j < table.length; j++) {
+            numberOfComparisions++;
             if (table[indexMin] > table[j])
                 indexMin = j;
 
         }
+        numberOfSwaps++;
         swap(i, indexMin);
         tables.push(table.map((x) => x));
     }
-    return tables;
+    return {numberOfComparisions, numberOfSwaps, tables};
 }
 
 function swap(i, j) {

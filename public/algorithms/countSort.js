@@ -1,5 +1,8 @@
 function countSort() {
-    tables = [];
+    var tables = [];
+
+    var numberOfComparisions = 0;
+    var numberOfSwaps = 0;
 
     var c = Array(maxValueInTable + 1).fill(0);
     var b = Array(table.length).fill(0);
@@ -20,7 +23,7 @@ function countSort() {
         tables.push(b.map((x) => x));
     }
 
-    return tables;
+    return {numberOfComparisions, numberOfSwaps, tables};
 }
 
 function swap(i, j) {

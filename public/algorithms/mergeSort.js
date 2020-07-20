@@ -1,5 +1,9 @@
 function mergeSort() {
-    tables = [];
+    var tables = [];
+
+
+    var numberOfComparisions = 0;
+    var numberOfSwaps = 0;
 
     function msort(p, sre, z) {
 
@@ -20,9 +24,12 @@ function mergeSort() {
 
         while (l < velikost1podtabela && r < velikost2podtabela) {
 
+            numberOfComparisions++;
             if (t1[l] <= t2[r]) {
+                numberOfSwaps++;
                 table[k] = t1[l++];
             } else {
+                numberOfSwaps++;
                 table[k] = t2[r++];
             }
             tables.push(table.map((x) => x));
@@ -31,11 +38,13 @@ function mergeSort() {
         }
 
         while (l < velikost1podtabela) {
+            numberOfSwaps++;
             table[k++] = t1[l++];
             tables.push(table.map((x) => x));
         }
 
         while (r < velikost2podtabela) {
+            numberOfSwaps++;
             table[k++] = t2[r++];
             tables.push(table.map((x) => x));
         }
@@ -51,7 +60,7 @@ function mergeSort() {
     }
 
     sortInitializer(0, table.length - 1);
-    return tables;
+    return {numberOfComparisions, numberOfSwaps, tables};
 }
 
 function swap(i, j) {

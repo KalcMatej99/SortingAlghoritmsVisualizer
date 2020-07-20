@@ -1,6 +1,9 @@
 function combsort() {
     var tables = [];
 
+    var numberOfComparisions = 0;
+    var numberOfSwaps = 0;
+
     var gap = table.length; // Initialize gap size
     var shrink = 1.3; // Set the gap shrink factor
     var sorted = false;
@@ -14,7 +17,10 @@ function combsort() {
         }
         var i = 0;
         while (i + gap < table.length) {
+
+            numberOfComparisions++;
             if (table[i] > table[i + gap]) {
+                numberOfSwaps++;
                 swap(i, i + gap);
                 tables.push(table.map((x) => x));
                 sorted = false;
@@ -23,7 +29,7 @@ function combsort() {
             i++;
         }
     }
-    return tables;
+    return {numberOfComparisions, numberOfSwaps, tables};
 }
 
 function swap(i, j) {

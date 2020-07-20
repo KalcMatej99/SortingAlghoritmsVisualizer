@@ -1,5 +1,8 @@
 function quickSort() {
-    tables = [];
+    var tables = [];
+
+    var numberOfComparisions = 0;
+    var numberOfSwaps = 0;
 
     function razporedi(p, z) {
         var m = table[parseInt(p + (z - p) / 2, 10)];
@@ -9,14 +12,19 @@ function quickSort() {
 
         while (i <= j) {
             while (table[i] < m) {
+                numberOfComparisions++;
                 i++;
             }
+            numberOfComparisions++;
 
             while (table[j] > m) {
+                numberOfComparisions++;
                 j--;
             }
+            numberOfComparisions++;
 
             if (i <= j) {
+                numberOfSwaps++;
                 swap(i, j);
                 tables.push(table.map((x) => x));
                 i++;
@@ -32,7 +40,7 @@ function quickSort() {
     }
 
     razporedi(0, table.length - 1);
-    return tables;
+    return {numberOfComparisions, numberOfSwaps, tables};
 }
 
 function swap(i, j) {

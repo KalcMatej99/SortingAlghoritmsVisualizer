@@ -5,4 +5,4 @@ const fastVelocitySorting = 5000;
 
 const littleSizeArray = 10;
 const middleSizeArray = 100;
-const bigSizeArray = 1000;
+const bigSizeArray = 500;

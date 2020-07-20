@@ -21,14 +21,14 @@
     <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
         <a class="navbar-brand logo" style="width: 50%;" href="./index.html">Matej Kalc</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item mx-0 mx-lg-1" role="presentation"><button
                         class="btn btn-secondary nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                        style="color: #ffffff;" onclick="generateRandomTable()">New Random Table</button>
+                        style="color: #ffffff;" onclick="generateRandomTable()">New Random Array</button>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1" role="presentation"><button
                         class="btn btn-danger nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
@@ -72,15 +72,36 @@
     </nav>
     <main class="page">
         <section class="portfolio-block">
-            <div class="heading">
-                <h2>Sorting Algorithm Visualizer</h2>
-                <div id="infoAlgorithm">
-                    <h4><b>Insertion Sort</b> has quadratic time complexity.</h4>
-                </div>
-                <form>
-                    <canvas width="300" height="300" id="myCanvas"></canvas>
-                </form>
+            <h2 style="text-align: center;">Sorting Algorithm Visualizer</h2>
+            <div style="text-align: center;" id="infoAlgorithm">
+                <p><b>Insertion Sort</b> has quadratic time complexity.</p>
+            </div>
+            <form>
+                <canvas width="300" height="300" id="myCanvas"></canvas>
+            </form>
         </section>
+        <!-- Modal -->
+        <div class="modal fade" id="infoModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Sorting Algorithms Visualizer</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>This page shows graphically how each sorting algorithm works.</p>
+                        <p>To use the site properly, you should <b>select an algorithm</b> and <b>click Sort</b>.</p>
+                        <p>It is possible to choose the size of the array and the velocity of sorting.</p>
+                        <p>To start over click on New Random Array.</p>
+                        <p>This site is optimised for PC/Desktop.</p>
+                        <p>To close this popup please click the 'Close' button.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </main>
     <script src="./public/javascripts/jquery.min.js"></script>
     <script src="./public/javascripts/constants.js"></script>
@@ -106,8 +127,13 @@
     var velocity = slowVelocitySorting;
 
     $(document).ready(function () {
+        showInfoModal();
         generateRandomTable();
     });
+
+    function showInfoModal() {
+        $('#infoModal').modal('show');
+    }
 
     function generateRandomTable() {
         clearAllTimeouts();
@@ -127,18 +153,18 @@
         var selectedAlgorithm = document.getElementById("algorithmSelect").selectedIndex;
         switch (selectedAlgorithm) {
             case 0:
-                element = '<h4><b>Insertion Sort</b> has quadratic time complexity.</h4>';
+                element = '<p><b>Insertion Sort</b> has quadratic time complexity.</p>';
                 break;
             case 1:
-                element = '<h4><b>Selection Sort</b> has quadratic time complexity.</h4>';
+                element = '<p><b>Selection Sort</b> has quadratic time complexity.</p>';
                 break;
-            case 2: element = '<h4><b>Bubble Sort</b> has quadratic time complexity.</h4>'; break;
-            case 3: element = '<h4><b>Heap Sort</b> has time complexity O(n * log n).</h4>'; break;
-            case 4: element = '<h4><b>Quick Sort</b> has time complexity O(n * log n).</h4>'; break;
-            case 5: element = '<h4><b>Merge Sort</b> has time complexity O(n * log n).</h4>'; break;
-            case 6: element = '<h4><b>Count Sort</b> has linear time complexity.</h4>'; break;
-            case 7: element = '<h4><b>Shell Sort</b> has quadratic time complexity.</h4>'; break;
-            case 8: element = '<h4><b>Comb Sort</b> has time complexity O(n * log n).</h4>'; break;
+            case 2: element = '<p><b>Bubble Sort</b> has quadratic time complexity.</p>'; break;
+            case 3: element = '<p><b>Heap Sort</b> has time complexity O(n * log n).</p>'; break;
+            case 4: element = '<p><b>Quick Sort</b> has time complexity O(n * log n).</p>'; break;
+            case 5: element = '<p><b>Merge Sort</b> has time complexity O(n * log n).</p>'; break;
+            case 6: element = '<p><b>Count Sort</b> has linear time complexity.</p>'; break;
+            case 7: element = '<p><b>Shell Sort</b> has quadratic time complexity.</p>'; break;
+            case 8: element = '<p><b>Comb Sort</b> has time complexity O(n * log n).</p>'; break;
             default: break;
         }
 
@@ -149,7 +175,7 @@
 
         var selectedVelocity = document.getElementById("velocitySelect").selectedIndex;
         switch (selectedVelocity) {
-            
+
             case 0:
                 size = slowVelocitySorting;
                 break;

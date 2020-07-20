@@ -56,6 +56,7 @@
                         <option value="1" selected="" style="color:black">Slow</option>
                         <option value="2" style="color:black">Normal</option>
                         <option value="3" style="color:black">Fast</option>
+                        <option value="4" style="color:black">Super Fast</option>
                     </select>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1" role="presentation">
@@ -184,6 +185,9 @@
                 break;
             case 2:
                 velocity = fastVelocitySorting;
+                break;
+            case 3:
+                velocity = superFastVelocitySorting;
                 break;
             default: break;
         }

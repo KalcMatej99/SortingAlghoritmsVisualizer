@@ -261,7 +261,6 @@
         }
     }
     function drawTables(states) {
-        console.log(states);
         var tables = states.tables;
         var numberOfStates = tables.length;
         var speed = velocity / numberOfStates;
@@ -274,7 +273,8 @@
                     indexTable++;
                     if (indexTable >= tables.length) {
                         clearAllTimeouts();
-                        showComparisionAndSwaps(states.numberOfComparisions, states.numberOfSwaps);
+                        if(states.numberOfComparisions > 0 && states.numberOfSwaps > 0)
+                            showComparisionAndSwaps(states.numberOfComparisions, states.numberOfSwaps);
                         tables = null;
                     }
                 }

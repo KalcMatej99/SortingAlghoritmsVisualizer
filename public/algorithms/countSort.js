@@ -3,6 +3,7 @@ function countSort() {
 
     var numberOfComparisions = 0;
     var numberOfSwaps = 0;
+    var maxValueInTable = Math.max(...table);
 
     var c = Array(maxValueInTable + 1).fill(0);
     var b = Array(table.length).fill(0);
@@ -24,10 +25,4 @@ function countSort() {
     }
 
     return {numberOfComparisions, numberOfSwaps, tables};
-}
-
-function swap(i, j) {
-    var temp = table[j];
-    table[j] = table[i];
-    table[i] = temp;
 }
